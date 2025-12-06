@@ -16,7 +16,6 @@ from pathlib import Path
 import httpx
 from dotenv import load_dotenv
 from langgraph.graph import StateGraph, END
-from langchain_openai import ChatOpenAI
 
 # Load environment variables
 load_dotenv()

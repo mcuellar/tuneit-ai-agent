@@ -1,0 +1,51 @@
+Position: AI/ML Engineer
+Company: DataTech Labs
+Location: San Francisco, CA (Hybrid)
+Salary Range: $160,000 - $220,000
+
+About the Role:
+DataTech Labs is seeking a talented AI/ML Engineer to join our research and development team. You will work on cutting-edge machine learning projects that impact millions of users worldwide.
+
+Key Responsibilities:
+- Design, develop, and deploy machine learning models at scale
+- Implement and optimize ML pipelines for training and inference
+- Collaborate with data scientists to productionize research models
+- Build and maintain ML infrastructure and tooling
+- Conduct experiments and analyze model performance
+- Stay current with latest ML research and technologies
+
+Required Qualifications:
+- Master's or PhD in Computer Science, Machine Learning, or related field (or equivalent experience)
+- 3+ years of experience in machine learning engineering
+- Strong programming skills in Python and experience with ML frameworks (TensorFlow, PyTorch, JAX)
+- Experience with MLOps tools and practices (MLflow, Kubeflow, etc.)
+- Deep understanding of machine learning algorithms and neural networks
+- Experience with distributed computing and large-scale data processing
+- Proficiency with cloud platforms (AWS SageMaker, GCP Vertex AI, or Azure ML)
+- Strong software engineering practices (testing, CI/CD, version control)
+
+Preferred Skills:
+- Experience with LLMs and transformer architectures
+- Knowledge of computer vision or NLP
+- Experience with deep learning optimization techniques
+- Familiarity with data pipeline tools (Airflow, Prefect)
+- Experience with A/B testing and experimentation frameworks
+- Publications in top-tier ML conferences
+
+Technologies We Use:
+- Python, PyTorch, TensorFlow, Scikit-learn
+- Docker, Kubernetes, AWS/GCP
+- PostgreSQL, Redis, Elasticsearch
+- Git, GitHub Actions, Jenkins
+- Jupyter, MLflow, Weights & Biases
+
+What We Offer:
+- Competitive compensation and equity
+- Health, dental, vision, and life insurance
+- 401(k) with generous company match
+- Flexible hybrid work arrangement
+- Learning and development budget ($5,000/year)
+- Latest hardware and software tools
+- Collaborative research environment
+- Opportunity to work on impactful ML projects
+- Regular tech talks and knowledge sharing sessions
