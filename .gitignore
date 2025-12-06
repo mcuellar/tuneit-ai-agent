@@ -205,3 +205,11 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# TuneIt AI Agent specific
+tuneit_agent.log
+job_descriptions/
+test_job_descriptions/
+test_output/
+.env.test
+*.log

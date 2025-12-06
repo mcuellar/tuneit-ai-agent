@@ -1,0 +1,55 @@
+Position: Senior Python Developer
+Company: InnovateTech Solutions
+Location: Remote (US)
+Salary Range: $140,000 - $180,000
+
+About Us:
+InnovateTech Solutions is a leading software company specializing in AI-powered business solutions. We're looking for a talented Senior Python Developer to join our growing team.
+
+Job Description:
+We are seeking an experienced Python developer to design, develop, and maintain our core platform. You will work closely with our engineering team to build scalable, high-performance applications that serve thousands of users daily.
+
+Requirements:
+- 5+ years of professional experience with Python
+- Strong knowledge of Python frameworks (Django, Flask, FastAPI)
+- Experience with RESTful API design and development
+- Proficiency in SQL and NoSQL databases (PostgreSQL, MongoDB, Redis)
+- Experience with cloud platforms (AWS, GCP, or Azure)
+- Understanding of containerization (Docker, Kubernetes)
+- Familiarity with CI/CD pipelines and DevOps practices
+- Experience with version control (Git)
+- Strong problem-solving and analytical skills
+- Excellent communication and teamwork abilities
+
+Nice to Have:
+- Experience with machine learning frameworks (TensorFlow, PyTorch, scikit-learn)
+- Knowledge of frontend technologies (React, Vue.js)
+- Experience with microservices architecture
+- Contributions to open-source projects
+- Experience with Agile/Scrum methodologies
+- Background in data engineering or data science
+
+Responsibilities:
+- Design and implement scalable backend services and APIs
+- Write clean, maintainable, and well-documented code
+- Collaborate with cross-functional teams to define and implement new features
+- Optimize application performance and scalability
+- Participate in code reviews and provide constructive feedback
+- Troubleshoot and debug production issues
+- Mentor junior developers and contribute to team knowledge sharing
+- Stay up-to-date with the latest Python and software development trends
+
+What We Offer:
+- Competitive salary and equity package
+- Comprehensive health, dental, and vision insurance
+- 401(k) with company match
+- Flexible work schedule and remote work options
+- Professional development opportunities
+- Modern tech stack and tools
+- Collaborative and innovative team culture
+- Unlimited PTO policy
+
+Application Process:
+Please submit your resume and a brief cover letter explaining your interest in the role. We review applications on a rolling basis and will contact qualified candidates for an initial screening.
+
+InnovateTech Solutions is an equal opportunity employer. We celebrate diversity and are committed to creating an inclusive environment for all employees.
