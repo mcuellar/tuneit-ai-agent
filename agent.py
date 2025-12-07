@@ -99,9 +99,6 @@ class MCPClient:
             "job_description": job_description
         })
     
-        return self.call_tool("tailor_resume", {
-            "job_description": job_description  
-        })
     
     def save_tailored_resume(self, resume_content: str, job_title: str) -> str:
         """Save the tailored resume."""
