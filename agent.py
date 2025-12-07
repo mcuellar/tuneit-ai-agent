@@ -83,26 +83,36 @@ class MCPClient:
     
     def format_job_description(self, job_description: str) -> dict:
         """Format a job description using MCP tool."""
-        return self.call_tool("format_job_description", {
+        return self.call_tool("format_to_markdown", {
             "job_description": job_description
         })
     
-    def generate_tailored_resume(self, job_description: str) -> dict:
+    def generate_tailored_resume(self, base_resume: str, job_description: str) -> str:
         """Generate a tailored resume based on job description."""
-        return self.call_tool("generate_tailored_resume", {
+        
+        base_resume_path = os.path.join(os.path.dirname(__file__), "resume_base.md")
+        with open(base_resume_path, "r", encoding="utf-8") as f:
+            base_resume = f.read()
+
+        return self.call_tool("tailor_resume", {
+            "base_resume": base_resume,
             "job_description": job_description
         })
     
-    def save_tailored_resume(self, resume_content: str, job_title: str) -> dict:
+        return self.call_tool("tailor_resume", {
+            "job_description": job_description  
+        })
+    
+    def save_tailored_resume(self, resume_content: str, job_title: str) -> str:
         """Save the tailored resume."""
         return self.call_tool("save_tailored_resume", {
             "resume_content": resume_content,
             "job_title": job_title
         })
     
-    def save_job_description(self, job_description: str, job_title: str) -> dict:
+    def save_job_description(self, job_description: str, job_title: str) -> str:
         """Save the formatted job description."""
-        return self.call_tool("save_job_description", {
+        return self.call_tool("save_job", {
             "job_description": job_description,
             "job_title": job_title
         })

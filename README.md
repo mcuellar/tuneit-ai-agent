@@ -13,12 +13,12 @@ The TuneIt AI Agent continuously monitors a specified directory for new job desc
 
 ## Features
 
-- 🤖 **LangGraph Workflow**: Structured AI agent with a clear state graph
-- 📁 **File Watching**: Automatic detection of new job description files
-- 🔌 **MCP Integration**: Seamless integration with MCP server over HTTP
-- 🔄 **Background Runner**: Continuous processing service
-- 📝 **Comprehensive Logging**: Detailed logs for monitoring and debugging
-- ⚙️ **Configurable**: Environment-based configuration
+- **LangGraph Workflow**: Structured AI agent with a clear state graph
+- **File Watching**: Automatic detection of new job description files
+- **MCP Integration**: Seamless integration with MCP server over HTTP
+- **Background Runner**: Continuous processing service
+- **Comprehensive Logging**: Detailed logs for monitoring and debugging
+- **Configurable**: Environment-based configuration
 
 ## Architecture
 
@@ -90,8 +90,8 @@ cd tuneit-ai-agent
 ### 2. Create a virtual environment
 
 ```bash
-python3 -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+python3 -m venv .venv
+source .venv/bin/activate  # On Windows: venv\Scripts\activate
 ```
 
 ### 3. Install dependencies
