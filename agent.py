@@ -13,9 +13,10 @@ import logging
 from typing import TypedDict, Annotated, Literal
 from pathlib import Path
 
-import httpx
+from fastmcp import Client as FastMCPClient
 from dotenv import load_dotenv
 from langgraph.graph import StateGraph, END
+import asyncio
 
 # Load environment variables
 load_dotenv()
@@ -39,89 +40,96 @@ class AgentState(TypedDict):
 
 
 class MCPClient:
-    """Client for interacting with MCP server over HTTP."""
-    
+    """Client for interacting with MCP server using fastmcp."""
+
     def __init__(self, base_url: str):
         """
         Initialize MCP client.
-        
         Args:
             base_url: Base URL of the MCP server (e.g., http://localhost:8000)
         """
         self.base_url = base_url.rstrip('/')
-        self.client = httpx.Client(timeout=30.0)
+        self.client = FastMCPClient(self.base_url)
         logger.info(f"Initialized MCP client with base URL: {self.base_url}")
-    
-    def call_tool(self, tool_name: str, arguments: dict) -> dict:
+
+    async def call_tool(self, tool_name: str, arguments: dict) -> dict:
         """
-        Call an MCP tool via HTTP.
-        
+        Call an MCP tool via fastmcp Client.
         Args:
             tool_name: Name of the tool to call
             arguments: Arguments to pass to the tool
-            
         Returns:
             Tool execution result
         """
-        url = f"{self.base_url}/tools/{tool_name}"
         logger.info(f"Calling MCP tool: {tool_name}")
         logger.debug(f"Arguments: {arguments}")
-        
         try:
-            response = self.client.post(
-                url,
-                json={"arguments": arguments},
-                headers={"Content-Type": "application/json"}
-            )
-            response.raise_for_status()
-            result = response.json()
-            logger.info(f"Tool {tool_name} executed successfully")
-            return result
-        except httpx.HTTPError as e:
+            # fastmcp Client supports both sync and async, use sync for compatibility
+            result = None
+            async with self.client as client:
+                result =  await client.call_tool(tool_name, arguments)
+                output = result.content[0].text if result.content else ""
+                
+                logger.info(f"Tool {tool_name} executed successfully")
+                return output
+            
+        except Exception as e:
             logger.error(f"Error calling tool {tool_name}: {e}")
             raise
     
     def format_job_description(self, job_description: str) -> dict:
         """Format a job description using MCP tool."""
-        return self.call_tool("format_to_markdown", {
-            "job_description": job_description
-        })
+        params = {"job_description": job_description}
+        
+        return asyncio.run(self.call_tool("format_to_markdown", params))
+
     
-    def generate_tailored_resume(self, base_resume: str, job_description: str) -> str:
+    def generate_tailored_resume(self, job_description: str) -> str:
         """Generate a tailored resume based on job description."""
         
         base_resume_path = os.path.join(os.path.dirname(__file__), "resume_base.md")
         with open(base_resume_path, "r", encoding="utf-8") as f:
             base_resume = f.read()
 
-        return self.call_tool("tailor_resume", {
+        params = {
             "base_resume": base_resume,
             "job_description": job_description
-        })
+        }
+
+        return asyncio.run(self.call_tool("tailor_resume", params))
+
     
     
     def save_tailored_resume(self, resume_content: str, job_title: str) -> str:
         """Save the tailored resume."""
-        return self.call_tool("save_tailored_resume", {
+
+        params = {
             "resume_content": resume_content,
-            "job_title": job_title
-        })
+            "filename": job_title               
+        }
+        
+        return asyncio.run(self.call_tool("save_tailored_resume", params))
     
     def save_job_description(self, job_description: str, job_title: str) -> str:
         """Save the formatted job description."""
-        return self.call_tool("save_job", {
-            "job_description": job_description,
-            "job_title": job_title
-        })
+        params = {
+            "job_content": job_description,
+            "filename": job_title               
+        }
+        
+        return asyncio.run(self.call_tool("save_job", params))
     
     def close(self):
-        """Close the HTTP client."""
-        self.client.close()
+        """Close the fastmcp client if needed."""
+        if hasattr(self.client, 'close'):
+            self.client.close()
 
 
 class TuneItAgent:
     """LangGraph agent for processing job descriptions and generating tailored resumes."""
     
+    RESUME_PREFIX = "Gaston_M_Cuellar_"
+
     def __init__(self, mcp_url: str):
         """
         Initialize the TuneIt agent.
@@ -159,7 +167,10 @@ class TuneItAgent:
             )
             
             # Extract formatted job description from result
-            formatted = result.get('formatted_job_description', result.get('result', ''))
+            # formatted = result.get('formatted_job_description', result.get('result', ''))
+            formatted = result
+
+            print("Formatted Job Description:", formatted)
             state['formatted_job_description'] = formatted
             state['status'] = 'job_description_formatted'
             logger.info("Job description formatted successfully")
@@ -179,7 +190,8 @@ class TuneItAgent:
             )
             
             # Extract tailored resume from result
-            resume = result.get('tailored_resume', result.get('result', ''))
+            # resume = result.get('tailored_resume', result.get('result', ''))
+            resume = result
             state['tailored_resume'] = resume
             state['status'] = 'resume_generated'
             logger.info("Tailored resume generated successfully")
@@ -196,20 +208,22 @@ class TuneItAgent:
         try:
             # Extract job title from path or use default
             job_title = Path(state['job_description_path']).stem
+            resume_filename = f"{self.RESUME_PREFIX}{job_title}"
             
-            # Save tailored resume
-            self.mcp_client.save_tailored_resume(
-                state['tailored_resume'],
-                job_title
-            )
-            logger.info("Tailored resume saved")
-            
+
             # Save job description
             self.mcp_client.save_job_description(
                 state['formatted_job_description'],
                 job_title
             )
             logger.info("Job description saved")
+
+            # Save tailored resume
+            self.mcp_client.save_tailored_resume(
+                state['tailored_resume'],
+                resume_filename
+            )
+            logger.info("Tailored resume saved")
             
             state['status'] = 'completed'
             logger.info("All outputs saved successfully")
